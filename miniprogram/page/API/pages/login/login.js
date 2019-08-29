@@ -16,12 +16,24 @@ Page({
   login() {
     const that = this
     wx.login({
-      success() {
+      success(res) {
         app.globalData.hasLogin = true
         that.setData({
-          hasLogin: true
+          hasLogin: true,
+          code: res.code
         })
       }
     })
+  },
+  copyCode() {
+    const that = this;
+    wx.setClipboardData({
+      data: that.data.code,
+      success(res) {
+        wx.showToast({
+          title: '复制成功',
+        });
+      }
+    });
   }
 })
