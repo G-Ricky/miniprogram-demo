@@ -7,6 +7,9 @@
   <view class="page-body">
     <view class="page-section">
       <block wx:if="{{hasLogin === true}}">
+        <button class="min-btn" type="primary" size="mini" bindtap="relogin">重新登录</button>
+      </block>
+      <block wx:if="{{hasLogin === true}}">
         <text class="page-body-title">已登录</text>
         <text class="page-body-text">每个微信号中仅需登录 1 次，后续每次进入页面即可根据微信 id 自动拉取用户信息</text>
         <text id="code" class="page-body-text">{{code}}</text>

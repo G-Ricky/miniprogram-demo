@@ -11,4 +11,3 @@ yarn-error.log*
 node_modules
 
 project.config.json
-config.json

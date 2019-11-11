@@ -1,4 +1,34 @@
 const app = getApp()
+const config = require("../../../../api.config.js");
+const wxLogin = function (page) {
+  wx.login({
+    success(res) {
+      console.log(config);
+      app.globalData.hasLogin = true
+      page.setData({
+        hasLogin: true,
+        code: res.code
+      });
+      wx.request({
+        url: config.api.code,
+        method: "POST",
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+        },
+        data: {
+          code: res.code
+        },
+        success(res) {
+          wx.showToast({
+            title: '成功',
+            icon: "success",
+          })
+        }
+      });
+    }
+  });
+}
+
 Page({
   onShareAppMessage() {
     return {
@@ -14,16 +44,7 @@ Page({
   },
   data: {},
   login() {
-    const that = this
-    wx.login({
-      success(res) {
-        app.globalData.hasLogin = true
-        that.setData({
-          hasLogin: true,
-          code: res.code
-        })
-      }
-    })
+    wxLogin(this);
   },
   copyCode() {
     const that = this;
@@ -35,5 +56,8 @@ Page({
         });
       }
     });
+  },
+  relogin() {
+    wxLogin(this);
   }
 })
